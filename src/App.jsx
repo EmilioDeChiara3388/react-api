@@ -40,6 +40,25 @@ function App() {
             </div>
           </div>
         </section>
+        <div className="container my-5">
+          <div className="p-2 mb-4 bg-dark text-white rounded-3">
+            <div className="container-fluid py-2">
+              <h3 className="display-5 fw-bold mb-3">Aggiungi articolo</h3>
+              <button className="btn btn-primary btn-lg" type="button" popovertarget="off-canvas-form">
+                Aggiungi
+              </button>
+            </div>
+          </div>
+
+          <div id="off-canvas-form" popover="true" className='p-5' style={{ minHeight: "100dvh", width: "50%" }}>
+            <div className='d-flex justify-content-between align-item-center'>
+              <h4>Aggiungi Articolo</h4>
+              <button className="btn btn-primary" type="button" popovertarget="off-canvas-form" popovertargetaction="hide">
+                Chiudi
+              </button>
+            </div>
+          </div>
+        </div>
       </main>
     </>
   )
