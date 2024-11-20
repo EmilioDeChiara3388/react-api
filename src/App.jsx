@@ -29,9 +29,16 @@ function App() {
                     <div className="col" key={post.index}>
                       <div className="card border border-danger">
                         <img className='rounded' src={'http://localhost:3000/imgs/posts/' + post.image} alt="" />
-                        <p className='my-2 text-center'>
-                          {post.title}
-                        </p>
+                        <div className='d-flex justify-content-between align-items-center'>
+                          <div>
+                            <p className='m-2'> {post.title} </p>
+                          </div>
+                          <div>
+                            <button className='mx-1 px-1'>
+                              <i className="bi bi-trash"></i>
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )) :
@@ -104,11 +111,9 @@ function App() {
                 <button type="submit" className="btn btn-primary my-3">Pubblica</button>
               </div>
 
-
             </form>
           </div>
         </div>
-
 
       </main>
     </>
