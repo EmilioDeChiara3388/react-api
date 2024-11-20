@@ -19,26 +19,28 @@ function App() {
   return (
     <>
       <AppHeader />
-      <section className='posts'>
-        <div className="container">
-          <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-            {
-              postsData.data ?
-                postsData.data.map(post => (
-                  <div className="col" key={post.index}>
-                    <div className="card">
-                      <img src={'http://localhost:3000/imgs/posts/' + post.image} alt="" />
-                      <p>
-                        {post.title}
-                      </p>
+      <main>
+        <section className='posts'>
+          <div className="container">
+            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+              {
+                postsData.data ?
+                  postsData.data.map(post => (
+                    <div className="col" key={post.index}>
+                      <div className="card border border-danger">
+                        <img className='rounded' src={'http://localhost:3000/imgs/posts/' + post.image} alt="" />
+                        <p className='my-2 text-center'>
+                          {post.title}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                )) :
-                <p>Nessun risultato</p>
-            }
+                  )) :
+                  <p>Nessun risultato</p>
+              }
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
     </>
   )
 }
