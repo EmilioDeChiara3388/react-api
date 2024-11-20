@@ -57,8 +57,59 @@ function App() {
                 Chiudi
               </button>
             </div>
+            <form className='my-3'>
+
+              <div className="mb-3">
+                <label htmlFor="Titolo" className="form-label">Titolo Articolo</label>
+                <div className="input-group mb-3">
+                  <input htmlFor="titolo" name='titolo' id='titolo' type="text" className="form-control" placeholder="Inserisci Titolo Articolo" aria-label="Titolo Articolo" aria-describedby="button-addon2" required />
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="Slug" className="form-label">Slug Articolo</label>
+                <div className="input-group mb-3">
+                  <input htmlFor="Slug" name='Slug' id='Slug' type="text" className="form-control" placeholder="Inserisci Slug Articolo" aria-label="Slug Articolo" aria-describedby="button-addon2" required />
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="contenuto" className="form-label">Contenuto</label>
+                <textarea className="form-control" name="contenuto" id="contenuto" rows="7" placeholder="Inserisci Contenuto Articolo" required></textarea>
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="Immagine" className="form-label">Immagine</label>
+                <div className="input-group mb-3">
+                  <input htmlFor="image" name='image' id='image' type="text" className="form-control" placeholder="/images/1jpg" aria-label="Immagine Articolo" aria-describedby="button-addon2" />
+                </div>
+              </div>
+
+              <div className='d-flex'>
+                <div className="form-check">
+                  <input className="form-check-input" type="checkbox" name="tags" id="tags" />
+                  <label className="form-check-label" htmlFor="tags"> Antipasti </label>
+                </div>
+                <div className="form-check">
+                  <input className="form-check-input" type="checkbox" name="tags" id="tags" />
+                  <label className="form-check-label" htmlFor="tags"> Primi </label>
+                </div>
+                <div className="form-check">
+                  <input className="form-check-input" type="checkbox" name="tags" id="tags" />
+                  <label className="form-check-label" htmlFor="tags"> Dolci </label>
+                </div>
+              </div>
+
+              <div>
+                <button type="submit" className="btn btn-primary my-3">Pubblica</button>
+              </div>
+
+
+            </form>
           </div>
         </div>
+
+
       </main>
     </>
   )
