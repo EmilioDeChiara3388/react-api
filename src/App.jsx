@@ -5,6 +5,8 @@ import './App.css'
 function App() {
 
   const [postsData, setPostsData] = useState({})
+  const [posts, setPosts] = useState("")
+
 
   function fetchData(url = "http://127.0.0.1:3000/") {
     fetch(url)
@@ -16,6 +18,13 @@ function App() {
 
   useEffect(fetchData, [])
 
+  /* function removePost(e) {
+    const postToRemove = e.target.getAttribute("data-slug")
+    const newPosts = postsData.data.filter((post) => post.slug != postToRemove)
+    setPosts(newPosts)
+  } */
+
+
   return (
     <>
       <AppHeader />
@@ -26,15 +35,15 @@ function App() {
               {
                 postsData.data ?
                   postsData.data.map(post => (
-                    <div className="col" key={post.index}>
-                      <div className="card border border-danger">
+                    <div className="col" key={post.slug} >
+                      <div className="card border border-danger" >
                         <img className='rounded' src={'http://localhost:3000/imgs/posts/' + post.image} alt="" />
                         <div className='d-flex justify-content-between align-items-center'>
                           <div>
                             <p className='m-2'> {post.title} </p>
                           </div>
                           <div>
-                            <button className='mx-1 px-1'>
+                            <button className='mx-1 px-1' /* onClick={removePost} */>
                               <i className="bi bi-trash"></i>
                             </button>
                           </div>
@@ -69,14 +78,14 @@ function App() {
               <div className="mb-3">
                 <label htmlFor="Titolo" className="form-label">Titolo Articolo</label>
                 <div className="input-group mb-3">
-                  <input htmlFor="titolo" name='titolo' id='titolo' type="text" className="form-control" placeholder="Inserisci Titolo Articolo" aria-label="Titolo Articolo" aria-describedby="button-addon2" required />
+                  <input name='titolo' id='titolo' type="text" className="form-control" placeholder="Inserisci Titolo Articolo" aria-label="Titolo Articolo" aria-describedby="button-addon2" required />
                 </div>
               </div>
 
               <div className="mb-3">
                 <label htmlFor="Slug" className="form-label">Slug Articolo</label>
                 <div className="input-group mb-3">
-                  <input htmlFor="Slug" name='Slug' id='Slug' type="text" className="form-control" placeholder="Inserisci Slug Articolo" aria-label="Slug Articolo" aria-describedby="button-addon2" required />
+                  <input name='Slug' id='Slug' type="text" className="form-control" placeholder="Inserisci Slug Articolo" aria-label="Slug Articolo" aria-describedby="button-addon2" required />
                 </div>
               </div>
 
@@ -88,21 +97,25 @@ function App() {
               <div className="mb-3">
                 <label htmlFor="Immagine" className="form-label">Immagine</label>
                 <div className="input-group mb-3">
-                  <input htmlFor="image" name='image' id='image' type="text" className="form-control" placeholder="/images/1jpg" aria-label="Immagine Articolo" aria-describedby="button-addon2" />
+                  <input name='image' id='image' type="text" className="form-control" placeholder="Inserisci percorso immagine" aria-label="Immagine Articolo" aria-describedby="button-addon2" />
                 </div>
               </div>
 
-              <div className='d-flex'>
+              <div className='d-flex justify-content-around'>
                 <div className="form-check">
-                  <input className="form-check-input" type="checkbox" name="tags" id="tags" />
+                  <input className="form-check-input" type="checkbox" name="tags" />
                   <label className="form-check-label" htmlFor="tags"> Antipasti </label>
                 </div>
                 <div className="form-check">
-                  <input className="form-check-input" type="checkbox" name="tags" id="tags" />
+                  <input className="form-check-input" type="checkbox" name="tags" />
                   <label className="form-check-label" htmlFor="tags"> Primi </label>
                 </div>
                 <div className="form-check">
-                  <input className="form-check-input" type="checkbox" name="tags" id="tags" />
+                  <input className="form-check-input" type="checkbox" name="tags" />
+                  <label className="form-check-label" htmlFor="tags"> Secondi </label>
+                </div>
+                <div className="form-check">
+                  <input className="form-check-input" type="checkbox" name="tags" />
                   <label className="form-check-label" htmlFor="tags"> Dolci </label>
                 </div>
               </div>
