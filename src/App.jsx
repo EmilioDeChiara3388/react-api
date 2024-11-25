@@ -7,14 +7,13 @@ const initialPostsData = {
   slug: '',
   content: '',
   image: '',
-  /* tags: "" */
+  //tags: ""
 }
 
 function App() {
 
-  const [postsData, setPostsData] = useState(initialPostsData)
+  const [newPost, setNewPost] = useState(initialPostsData)
   const [posts, setPosts] = useState([])
-
 
   function fetchData(url = "http://127.0.0.1:3000/") {
     fetch(url)
@@ -26,62 +25,45 @@ function App() {
 
   useEffect(fetchData, [])
 
+  const addPost = (e) => {
+    e.preventDefault();
 
-  function handleAddingForm(e) {
-    e.preventDefault()
-
-    const newPost = {
-      ...postsData
-    };
+    const postToAdd = {
+      ...newPost,
+    }
 
     fetch("http://127.0.0.1:3000/posts", {
       method: 'POST',
-      body: JSON.stringify(newPost),
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify(postToAdd)
     })
-      .then(res => res.json())
-      .then(response => {
-        console.log('Success:', response)
-        setPosts([
-          ...postsData,
-          response.data])
-        setPostsData(initialPostsData)
-
+      .then(resp => resp.json())
+      .then(addedPost => {
+        setPosts([...posts.data, addedPost]);
+        setNewPost({});
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => console.error("Errore nell'aggiunta del post:", error));
   }
 
-  function handleFormField(e) {
+  const handleFormField = (e) => {
     const { name, value } = e.target;
-    setPostsData({
-      ...postsData,
-      [name]: value
-    });
+    setNewPost({ ...newPost, [name]: value });
   }
 
-  function removePost(e) {
-    e.preventDefault()
-    console.log(e.target.getAttribute('data-slug'));
-
-    fetch("http://127.0.0.1:3000/posts", {
-
+  const postToRemove = (slug) => {
+    fetch(`http://127.0.0.1:3000/posts/${slug}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(res => res.json())
-      .then(response => {
-        const postToRemove = e.target.getAttribute("data-slug")
-        const newPosts = posts.data.filter((post) => post.slug != postToRemove)
-        setPosts(response)
-        console.log(response);
-
+    })
+      .then(() => {
+        setPosts(posts.data.filter(post => post.slug !== slug));
       })
+      .catch(error => console.error("Errore nella cancellazione del post:", error));
   }
-
-
 
   return (
     <>
@@ -101,7 +83,7 @@ function App() {
                             <p className='m-2'> {post.title} </p>
                           </div>
                           <div>
-                            <button className='mx-1 px-1' onClick={removePost} data-slug={post.slug}>
+                            <button className='mx-1 px-1' onClick={() => postToRemove(post.slug)} >
                               <i className="bi bi-trash"></i>
                             </button>
                           </div>
@@ -133,30 +115,30 @@ function App() {
               </button>
             </div>
 
-            <form className='my-3' onSubmit={handleAddingForm}>
+            <form className='my-3' onSubmit={addPost}>
               <div className="mb-3">
-                <label htmlFor="Titolo" className="form-label">Titolo Articolo</label>
+                <label htmlFor="title" className="form-label">Titolo Articolo</label>
                 <div className="input-group mb-3">
-                  <input name='title' id='title' type="text" className="form-control" placeholder="Inserisci Titolo Articolo" aria-label="Titolo Articolo" aria-describedby="button-addon2" value={postsData.title} onChange={handleFormField} required />
+                  <input name='title' id='title' type="text" className="form-control" placeholder="Inserisci Titolo Articolo" aria-label="Titolo Articolo" aria-describedby="button-addon2" value={newPost.title} onChange={handleFormField} required />
                 </div>
               </div>
 
               <div className="mb-3">
-                <label htmlFor="Slug" className="form-label">Slug Articolo</label>
+                <label htmlFor="slug" className="form-label">Slug Articolo</label>
                 <div className="input-group mb-3">
-                  <input name='slug' id='slug' type="text" className="form-control" placeholder="Inserisci Slug Articolo" aria-label="Slug Articolo" aria-describedby="button-addon2" value={postsData.slug} onChange={handleFormField} required />
+                  <input name='slug' id='slug' type="text" className="form-control" placeholder="Inserisci Slug Articolo" aria-label="Slug Articolo" aria-describedby="button-addon2" value={newPost.slug} onChange={handleFormField} required />
                 </div>
               </div>
 
               <div className="mb-3">
-                <label htmlFor="contenuto" className="form-label">Contenuto</label>
-                <textarea className="form-control" name="content" id="content" rows="7" placeholder="Inserisci Contenuto Articolo" value={postsData.content} onChange={handleFormField} required></textarea>
+                <label htmlFor="content" className="form-label">Contenuto</label>
+                <textarea className="form-control" name="content" id="content" rows="7" placeholder="Inserisci Contenuto Articolo" value={newPost.content} onChange={handleFormField} required></textarea>
               </div>
 
               <div className="mb-3">
-                <label htmlFor="Immagine" className="form-label">Immagine</label>
+                <label htmlFor="image" className="form-label">Immagine</label>
                 <div className="input-group mb-3">
-                  <input name='image' id='image' type="text" className="form-control" placeholder="Inserisci percorso immagine" aria-label="Immagine Articolo" aria-describedby="button-addon2" value={postsData.image} onChange={handleFormField} />
+                  <input name='image' id='image' type="text" className="form-control" placeholder="Inserisci percorso immagine" aria-label="Immagine Articolo" aria-describedby="button-addon2" value={newPost.image} onChange={handleFormField} />
                 </div>
               </div>
 
